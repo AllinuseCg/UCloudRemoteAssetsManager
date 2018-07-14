@@ -1,0 +1,120 @@
+﻿<Window x:Class="UCloudRemoteAssetsManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UCloudRemoteAssetsManager"
+        mc:Ignorable="d"
+        xmlns:ucloud="clr-namespace:UcloudAgent"
+        Title="UCloudUploadToolForCcc" Height="600" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="22" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="配置" Width="40" HorizontalAlignment="Left" >
+                <MenuItem x:Name="deployBucketBtn" Header="配置bucket" Click="deployBucketBtn_Click"/>
+            </MenuItem>
+            <MenuItem Header="帮助">
+                <MenuItem x:Name="aboutBtn" Header="关于" Click="aboutBtn_Click"/>
+            </MenuItem>
+        </Menu>
+        <Menu Grid.Row="2">
+            <!--<TextBlock x:Name="logBox" Text="log" Padding="0" Margin="0" FontSize="11"/>-->
+            <MenuItem x:Name="logBtn" Header="log" Click="logBtn_Click"/>
+        </Menu>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                
+                <TreeView Grid.Row="0"  x:Name="cloudTreeView">
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="cloudTreeView_selectAllBtn" Header="全选" Click="cloudTreeView_selectAllBtn_Click"/>
+                            <MenuItem x:Name="cloudTreeView_UnselectAllBtn" Header="全不选" Click="cloudTreeView_UnselectAllBtn_Click" />
+                            <MenuItem x:Name="cloudTreeView_InverseSelectBtn" Header="反选" Click="cloudTreeView_InverseSelectBtn_Click"/>
+                            <Separator/>
+                            <MenuItem  Header="删除" x:Name="cloudTreeView_deleteBtn" Click="cloudTreeView_deleteBtn_Click"  />
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="True"/>
+                            <Setter Property="Padding" Value="0,0,0,0"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=children}">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Content="{Binding field}" IsChecked="{Binding isChecked}" Tag="{Binding self}" IsThreeState="True"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+                
+                <StackPanel Grid.Row="1" Orientation="Horizontal" >
+                    <Button Content="下载" Width="90" IsEnabled="False"/>
+                    <Button Content="删除" x:Name="cloudTreeView_bottom_deleteBtn" Width="90" Click="cloudTreeView_deleteBtn_Click" />
+                </StackPanel>
+            </Grid>
+
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+            
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <TreeView Grid.Row="0" x:Name="localTreeView" AllowDrop="True" Drop="localTreeView_Drop">
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="localTreeView_selectAllBtn" Header="全选" Click="localTreeView_selectAllBtn_Click"/>
+                            <MenuItem x:Name="localTreeView_UnselectAllBtn" Header="全不选" Click="localTreeView_UnselectAllBtn_Click"/>
+                            <MenuItem x:Name="localTreeView_InverseSelectBtn" Header="反选" Click="localTreeView_InverseSelectBtn_Click"/>
+                            <Separator/>
+                            <MenuItem  Header="删除" x:Name="localTreeView_deleteBtn" Click="localTreeView_deleteBtn_Click"  />
+                            <MenuItem  Header="清空" x:Name="localTreeView_cleanBtn" Click="localTreeView_cleanBtn_Click" />
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="True"/>
+                            <Setter Property="Padding" Value="0,0,0,0"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding children}">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Content="{Binding field}" IsChecked="{Binding isChecked}" Tag="{Binding self}" IsThreeState="True"/>
+                                <!--<TextBlock Text="{Binding field}" />-->
+                            </StackPanel>
+
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" >
+                    <Button x:Name="localTreeView_uploadBtn" Content="上传" Width="90" Click="uploadBtn_Click"/>
+                    <Button x:Name="localTreeView_bottom_deleteBtn" Content="删除" Width="90" Click="localTreeView_deleteBtn_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch"/>
+
+        </Grid>
+    </Grid>
+</Window>
