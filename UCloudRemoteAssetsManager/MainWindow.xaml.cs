@@ -124,8 +124,14 @@ namespace UCloudRemoteAssetsManager
         #endregion
 
         #region localTree
+        /// <summary>
+        /// 将文件或文件夹拖入以添加文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void localTreeView_Drop(object sender, DragEventArgs e)
         {
+            if (State.currentBucket == null) return;
             Array paths = null;
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -167,6 +173,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void uploadBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             foreach (var i in localFileTree.root.getAllChildren(ref l))
             {
@@ -183,6 +190,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void localTreeView_deleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             localFileTree.root.getAllChildren(ref l, true);
             foreach (var i in l)
@@ -208,6 +216,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void localTreeView_cleanBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             localFileTree.root.getAllChildren(ref l, true, true);   // 和删除的唯一不同是包括了未选中的文件
             foreach (var i in l)
@@ -230,6 +239,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void localTreeView_selectAllBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             localFileTree.root.isChecked = true;
         }
         /// <summary>
@@ -237,6 +247,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void localTreeView_UnselectAllBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             localFileTree.root.isChecked = false;
         }
         /// <summary>
@@ -244,6 +255,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void localTreeView_InverseSelectBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             localFileTree.root.getAllChildren(ref l, false, true);
             foreach (var i in l)
@@ -261,6 +273,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void cloudTreeView_deleteBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             cloudFileTree.root.getAllChildren(ref l);
             foreach (var i in l)
@@ -279,6 +292,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void cloudTreeView_selectAllBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             cloudFileTree.root.isChecked = true;
         }
         /// <summary>
@@ -286,6 +300,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void cloudTreeView_UnselectAllBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             cloudFileTree.root.isChecked = false;
         }
         /// <summary>
@@ -293,6 +308,7 @@ namespace UCloudRemoteAssetsManager
         /// </summary>
         private void cloudTreeView_InverseSelectBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             cloudFileTree.root.getAllChildren(ref l, false, true);
             foreach (var i in l)
@@ -301,9 +317,10 @@ namespace UCloudRemoteAssetsManager
             }
             cloudFileTree.root.freshCheckState();
         }
-        
-        void cleanCloudTreeView()
+
+        private void cleanCloudTreeView()
         {
+            if (State.currentBucket == null) return;
             var l = new List<FolderTreeNode>();
             cloudFileTree.root.getAllChildren(ref l, true, true);   // 和删除的唯一不同是包括了未选中的文件
             foreach (var i in l)
