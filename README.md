@@ -17,7 +17,7 @@ _请符合我的目录结构和命名规范加上必要的注释_
 
 ##使用方法  
   
-下载地址   
+[下载地址](https://github.com/AllinuseCg/UCloudRemoteAssetsManager/releases/tag/Beta_v1.3)   
 
 还需要去ucloud官网下载[filemgr-win64](http://tools.ufile.ucloud.com.cn/filemgr-win64.zip)
 放入根目录，如果放错位置打开本软件会有提示  
