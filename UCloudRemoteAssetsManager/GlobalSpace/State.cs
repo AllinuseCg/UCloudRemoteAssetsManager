@@ -24,7 +24,7 @@ namespace UCloudRemoteAssetsManager
 
     static class ApplicationInfomation
     {
-        public static string Version { get { return "beta 1.2"; } }
+        public static string Version { get { return "beta 1.3"; } }
         public static string Copyright { get { return "Allinuse"; } }
     }
     
